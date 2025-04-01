@@ -277,6 +277,18 @@ let localize = {
     utility: "WSZECHSTRONNOŚĆ",
     uses: "UŻYWA",
   },
+  cs: {
+    setup: "PŘÍPRAVA HRY",
+    playstyle: "HERNÍ STYL",
+    complexity: "SLOŽITOST",
+    summary: "SHRNUTÍ SCHOPNOSTÍ",
+    offense: "ÚTOK",
+    control: "OVLÁDÁNÍ ÚZEMÍ",
+    fear: "STRACH",
+    defense: "OBRANA",
+    utility: "PODPORA OSTATNÍCH",
+    uses: "VYUŽÍVÁ",
+  },
   ar: {
     setup: "",
     playstyle: "",

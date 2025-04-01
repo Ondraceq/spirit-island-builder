@@ -392,6 +392,13 @@ let localize = {
     spirit: "CEL",
     threshold: "JEŚLI MASZ",
   },
+  cs: {
+    speed: "RYCHLOST",
+    range: "DOSAH",
+    land: "CÍLOVÉ ÚZEMÍ",
+    spirit: "CÍL",
+    threshold: "POKUD MÁTE",
+},
   ar: {
     speed: "سرعة",
     range: "مدى",
