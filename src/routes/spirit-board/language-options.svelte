@@ -49,6 +49,10 @@
       on:click={setLanguage("pl", spiritBoard)}>Polski</button>
     <button
       class="button is-small is-success"
+      class:is-light={spiritBoard.nameAndArt.language !== "cs"}
+      on:click={setLanguage("cs", spiritBoard)}>Česky</button>
+    <button
+      class="button is-small is-success"
       class:is-light={spiritBoard.nameAndArt.language !== "fr"}
       on:click={setLanguage("fr", spiritBoard)}>Français</button>
     <button

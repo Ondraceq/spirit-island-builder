@@ -28,6 +28,10 @@
       on:click={setLanguage("pl", powerCards)}>Polski</button>
     <button
       class="button is-small is-success"
+      class:is-light={powerCards.language !== "cs"}
+      on:click={setLanguage("cs", powerCards)}>Česky</button>
+    <button
+      class="button is-small is-success"
       class:is-light={powerCards.language !== "hu"}
       on:click={setLanguage("hu", powerCards)}>Magyar</button>
     <button

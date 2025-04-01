@@ -30,6 +30,10 @@
       on:click={setLanguage("pl", spiritBoardBack)}>Polski</button>
     <button
       class="button is-small is-success"
+      class:is-light={spiritBoardBack.language !== "cs"}
+      on:click={setLanguage("cs", spiritBoardBack)}>Česky</button>
+    <button
+      class="button is-small is-success"
       class:is-light={spiritBoardBack.language !== "ar"}
       on:click={setLanguage("ar", spiritBoardBack)}>عربي</button>
     <button
