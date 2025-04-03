@@ -35,13 +35,15 @@
 
 @font-face {
   font-family: "Name Headings";
-  src: url(../fonts/DKSnemand/DKSnemandTall.otf),
+  src: url(../fonts/Gnuolane/Gnuolane-Regular.otf),
+    url(../fonts/DKSnemand/DKSnemandTall.otf),
     url(../fonts/Mouse_Memoirs/MouseMemoirs-Regular.ttf);
 }
 
 @font-face {
   font-family: "Short Name Headings";
-  src: url(../fonts/DKSnemand/DKSnemandShort.otf),
+  src: url(../fonts/Gnuolane/Gnuolane-Regular.otf),
+    url(../fonts/DKSnemand/DKSnemandShort.otf),
     url(../fonts/Mouse_Memoirs/MouseMemoirs-Regular.ttf);
 }
 

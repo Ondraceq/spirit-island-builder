@@ -141,37 +141,31 @@ innate-info {
 
 info-title-speed {
   width: 143px;
-  padding-bottom: 4px;
   color: white;
 }
 
 innate-info-speed {
   width: 141px;
-  padding-bottom: 4px;
   border-right: 2px solid #7f5623;
 }
 
 info-title-range {
   width: 155px;
-  padding-bottom: 4px;
   color: white;
 }
 
 innate-info-range {
   font-family: "Antropos";
   width: 153px;
-  padding-bottom: 4px;
   border-right: 2px solid #7f5623;
 }
 
 info-title-target {
   width: 165px;
-  padding-bottom: 4px;
   color: white;
 }
 innate-info-target {
   width: 165px;
-  padding-bottom: 4px;
 }
 
 board.hide-text info-title-speed,

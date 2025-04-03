@@ -216,7 +216,8 @@ name {
   width: 100%;
   font-size: 28px;
   line-height: 32px;
-  word-spacing: -3px;
+  letter-spacing: 2px;
+  word-spacing: 0px;
   font-family: "Short Name Headings";
   text-transform: uppercase;
   color: white;
@@ -357,6 +358,7 @@ info-title-speed,
 info-title-range,
 info-title-target {
   color: white;
+  margin-bottom: -2px;
 }
 
 info-title-speed,
