@@ -4871,13 +4871,6 @@ function dynamicResizing() {
     }
   }
 
-  let totalWidth = getGrowthTableWidth(growthTable);
-  let growthTexts = board.getElementsByTagName("growth-text");
-  let tallGrowthText = hasTallGrowthText(growthTexts);
-  if (debug) {
-    console.log("Tall growth text found? (4 or more lines) " + tallGrowthText);
-  }
-
   function hasTallGrowthText(texts) {
     let hasTall = false;
     for (let i = 0; i < texts.length; i++) {
@@ -4885,6 +4878,13 @@ function dynamicResizing() {
       // true if any growth-text is more than 3 lines
     }
     return hasTall;
+  }
+
+  let totalWidth = getGrowthTableWidth(growthTable);
+  let growthTexts = board.getElementsByTagName("growth-text");
+  let tallGrowthText = hasTallGrowthText(growthTexts);
+  if (debug) {
+    console.log("Tall growth text found? (4 or more lines) " + tallGrowthText);
   }
 
   let newGrowthTable;
