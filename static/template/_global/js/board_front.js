@@ -755,10 +755,11 @@ function getGrowthActionTextAndIcons(growthAction) {
               case "inland":
               case "coastal":
               case "invaders":
+                let reqText = landtypeNames[lang][presenceReq] || presenceReq;
                 presenceReqsIcons +=
                   presenceOptions.length < 3
-                    ? "<span class='non-icon'>" + presenceReq.toUpperCase() + "</span>" // This do-nothing Icon just creates 50px of height to make everything line up. Other ideas?
-                    : "<span class='non-icon small'>" + presenceReq.toUpperCase() + "</span>";
+                    ? "<span class='non-icon'>" + reqText.toUpperCase() + "</span>" // This do-nothing Icon just creates 50px of height to make everything line up. Other ideas?
+                    : "<span class='non-icon small'>" + reqText.toUpperCase() + "</span>";
                 break;
               case "no-own-presence":
                 presenceReqsIcons += "{no-presence}";
@@ -1218,7 +1219,8 @@ function getGrowthActionTextAndIcons(growthAction) {
           tokenConditional = `<presence-req><icon class="${condition} terrain-double"></icon></presence-req>`;
         } else if (terrainNoIcons.has(condition)) {
           //coastal,inland,invaders
-          tokenConditional = `<presence-req><span class="non-icon">${condition}</span></presence-req>`;
+          let conditionText = landtypeNames[lang][condition] || condition;
+          tokenConditional = `<presence-req><span class="non-icon">${conditionText}</span></presence-req>`;
         } else {
           //a land with a particular token
           tokenConditional = `<presence-req><icon class="your-land add-token"><icon class="${condition}"></icon></icon></presence-req>`;
@@ -1500,7 +1502,7 @@ let Energy = {
   fr: "Energie",
   de: "Energie",
   pl: "Energia",
-  cs: "Energie",
+  cs: "energie",
   ar: "طاقة",
   hu: "Energia",
 };
@@ -1518,7 +1520,6 @@ let CardPlay = {
   fr: "Jouer une Carte",
   de: "Karte ausspielen",
   pl: "Zagraj jedną",
-  cs: "Hraná karta",
   hu: "Kártyakijátszás",
 };
 let CardPlays = {
@@ -1526,7 +1527,7 @@ let CardPlays = {
   fr: "Jouer des Cartes",
   de: "Karten ausspielen",
   pl: "Zagrane Karty",
-  cs: "Hraných karet",
+  cs: "hraných karet",
   hu: "Kijátszható kártyák",
 };
 
@@ -1559,7 +1560,7 @@ let landtypeNames = {
     "sands-mountain": "Mountain or Sands",
     "inland": "Inland",
     "coastal": "Coastal",
-    "land": "land",
+    "land": "Land",
     "invaders": "Invaders",
   },
   fr: {
@@ -1590,7 +1591,7 @@ let landtypeNames = {
     "sands-mountain": "déserts ou montagne",
     "inland": "Intérieures",
     "coastal": "Côtières",
-    "land": "région",
+    "land": "Région",
     "invaders": "Envahisseurs",
   },
   de: {
@@ -1621,7 +1622,7 @@ let landtypeNames = {
     "sands-mountain": "Berg oder Wüste",
     "inland": "Binnengebiet",
     "coastal": "Küste",
-    "land": "gebiet",
+    "land": "Gebiet",
     "invaders": "Invasoren",
   },
   pl: {
@@ -1652,7 +1653,7 @@ let landtypeNames = {
     "sands-mountain": "Góry lub Pustynia",
     "inland": "Wewnętrzne",
     "coastal": "Zewnętrzne",
-    "land": "kraina",
+    "land": "Kraina",
     "invaders": "Najeźdźcy",
   },
   cs: {
@@ -1715,7 +1716,7 @@ let landtypeNames = {
     "sands-mountain": "Hegyvidék vagy Sivatag",
     "inland": "Belső",
     "coastal": "Tengerparti",
-    "land": "terület",
+    "land": "Terület",
     "invaders": "Telepesek",
   },
 };
@@ -1989,7 +1990,7 @@ function getPresenceNodeHtml(
     subText = `${Energy[lang]}/${Turn[lang]}`;
   } else if (trackType === "card") {
     nodeClass = "card";
-    subText = `${CardPlays[lang]}`;
+    subText = `${Capitalise(CardPlays[lang], true)}`;
   } else if (trackType === "special") {
     nodeClass = "special-ring";
     subText = "";
@@ -2450,7 +2451,7 @@ function getPresenceNodeHtml(
         fr: ``,
         de: ``,
         pl: ``,
-        cs: "",
+        cs: `Zaplaťte ${valueNum} energie, abyste ${subText}`,
         ar: ``,
         zh: ``,
         hu: ``,
@@ -2501,7 +2502,7 @@ function updatePresenceNodeIDs() {
   }
 }
 
-function IconName(str, iconNum = 1) {
+function IconName(str, iconNum = 1, isFirst = true) {
   const regExp = /\(([^)]+)\)/;
   let num = "";
   let txt = "";
@@ -2579,7 +2580,7 @@ function IconName(str, iconNum = 1) {
   if (str.includes("/")) {
     // If it is a split icon, unsplit it.
     localize = {};
-    subText = `${IconName(str.split("/")[0])}/${IconName(str.split("/")[1])}`;
+    subText = `${IconName(str.split("/")[0], 1, isFirst)}/${IconName(str.split("/")[1], 1, isFirst)}`;
     return subText;
   }
 
@@ -2590,7 +2591,7 @@ function IconName(str, iconNum = 1) {
         fr: `Présence`,
         de: "Präsenz",
         pl: "Obecnością",
-        cs: "",
+        cs: "přítomnost",
         ar: "",
         zh: "你的靈跡",
         hu: "Jelenléted",
@@ -2603,7 +2604,7 @@ function IconName(str, iconNum = 1) {
         fr: `Votre Présence`,
         de: "Deine Präsenz",
         pl: "twoją Obecnością",
-        cs: "",
+        cs: "tvoje přítomnost",
         ar: "",
         zh: "你的靈跡",
         hu: "Jelenléted",
@@ -2619,7 +2620,7 @@ function IconName(str, iconNum = 1) {
               fr: `Renforcer Incarna`,
               de: "Incarna verstärken",
               pl: "Wzmocnij Inkarna",
-              cs: "",
+              cs: "Posílení vtělení",
               ar: ``,
               zh: ``,
               hu: "Megtestesülés Megerősítése",
@@ -2629,7 +2630,7 @@ function IconName(str, iconNum = 1) {
           case "add-move":
             localize = {
               en: txt
-                ? `Add/Move Incarna to Land with ${IconName(txt)}`
+                ? `Add/Move Incarna to Land with ${IconName(txt, 1, false)}`
                 : `Add/Move Incarna to Land with ${IconName("presence")}`,
               fr: txt
                 ? `Ajoutez/Déplacez Incarna vers une Région avec ${IconName(txt)}`
@@ -2640,7 +2641,9 @@ function IconName(str, iconNum = 1) {
               pl: txt
                 ? `Dodaj/Przenieś Inkarna do Krainy z ${IconName(txt)}`
                 : `Dodaj/Przenieś Inkarna do Krainy z ${IconName("presence")}`,
-              cs: "",
+              cs: txt
+                ? `Přidání/přesun vtělení na území s ${IconName(txt, 1, false)}`
+                : `Přidání/přesun vtělení na území s ${IconName("presence", 1, false)}`,
               ar: ``,
               zh: ``,
               hu: txt
@@ -2656,7 +2659,7 @@ function IconName(str, iconNum = 1) {
               fr: `Vous pouvez remplacer ${IconName(txt)} avec votre Incarna`,
               de: `Du darfst ${IconName(txt)} durch dein Incarna ersetzen`,
               pl: `Możesz Zamienić ${IconName(txt)} na twoje Inkarna`,
-              cs: "",
+              cs: `Můžete nahradit ${IconName(txt, 1, false)} svým vtělením`,
               ar: ``,
               zh: ``,
               hu: `Lecserélheted egy ${IconName(txt)}-ed a Megtestesülésedre`,
@@ -2668,7 +2671,7 @@ function IconName(str, iconNum = 1) {
               fr: `Déplacez Incarna`,
               de: "Bewege Incarna",
               pl: "Przesuń Inkarna",
-              cs: "",
+              cs: "Přesuň vtělení",
               ar: ``,
               zh: ``,
               hu: "Megtestesülés Mozgatása",
@@ -2680,7 +2683,7 @@ function IconName(str, iconNum = 1) {
               fr: `Ajoutez un ${IconName(txt)} à votre Incarna`,
               de: `Füge ein ${IconName(txt)} zu deinem Incarna hinzu`,
               pl: `Dodaj ${IconName(txt)} na twoje Inkarna`,
-              cs: "",
+              cs: `Přidejte ${IconName(txt, 1, false)} na území s vaším vtělením`,
               ar: ``,
               zh: ``,
               hu: `Rakj le egy ${IconName(txt)}-t a Megtestesülésedre`,
@@ -2692,7 +2695,7 @@ function IconName(str, iconNum = 1) {
               fr: `Renforcer Incarna`,
               de: "Incarna verstärken",
               pl: "Wzmocnij Inkarna",
-              cs: "",
+              cs: "Posílení vtělení",
               ar: ``,
               zh: ``,
               hu: "Megtestesülés Megerősítése",
@@ -2704,7 +2707,7 @@ function IconName(str, iconNum = 1) {
           fr: `Votre Incarna`,
           de: "Dein Incarna",
           pl: "Twoje Inkarna",
-          cs: "",
+          cs: "Tvoje vtělení",
           ar: "",
           zh: "你的化身",
           hu: "a Megtestesülésed",
@@ -2719,7 +2722,11 @@ function IconName(str, iconNum = 1) {
       subText = `+${num} ${Energy[lang]}`;
       break;
     case "plays":
-      subText = `${num} ${num > 1 ? CardPlays[lang] : CardPlay[lang]}`;
+      if (lang === "cs") {
+        subText = `${num} ${num > 4 ? "hraných karet" : num > 1 ? "hrané karty" : "hraná karta"}`;
+      } else {
+        subText = `${num} ${num > 1 ? CardPlays[lang] : CardPlay[lang]}`;
+      }
       break;
     case "add-presence":
       if (num === "any" && options.length === 1) {
@@ -2742,7 +2749,7 @@ function IconName(str, iconNum = 1) {
             fr: `Ajoutez une Présence ${opt3}`,
             de: `Füge eine Präsenz hinzu ${opt3}`,
             pl: `Dodaj Obecność ${opt3}`,
-            cs: "",
+            cs: `Přidání přítomnosti ${opt3}`,
             ar: ``,
             zh: ``,
             hu: `Jelenlét lerakása ${opt3}`,
@@ -2758,6 +2765,7 @@ function IconName(str, iconNum = 1) {
             fr: `Ajoutez une Présence ${IconName(preposition)} ${IconName(opt3)}`,
             de: ``,
             pl: ``,
+            cs: `Přidání přítomnosti ${IconName(preposition, 1, false)} ${IconName(opt3, 1, false)}`,
             ar: ``,
             zh: ``,
             hu: ``,
@@ -2773,6 +2781,7 @@ function IconName(str, iconNum = 1) {
                 fr: `Ajoutez une Présence et un ${IconName(opt3)}`,
                 de: `Füge eine Präsenz und ein ${IconName(opt3)} hinzu`,
                 pl: `Dodaj Obecność i ${IconName(opt3)}`,
+                cs: `Přidání přítomnosti a ${IconName(opt3, 1, false)}`,
                 ar: ``,
                 zh: ``,
                 hu: `Jelenlét és ${IconName(opt3)} lerakása`,
@@ -2785,6 +2794,7 @@ function IconName(str, iconNum = 1) {
                 fr: `Ajoutez une Présence ou un ${IconName(opt3)}`,
                 de: `Füge eine Präsenh oder eine ${IconName(opt3)} hinzu`,
                 pl: `Dodaj Obecność lub ${IconName(opt3)}`,
+                cs: `Přidání přítomnosti nebo ${IconName(opt3, 1, false)}`,
                 ar: ``,
                 zh: ``,
                 hu: `Jelenlét vagy ${IconName(opt3)} lerakása`,
@@ -2802,7 +2812,7 @@ function IconName(str, iconNum = 1) {
             operator = "/";
             operator = options.at(-1).toLowerCase() === "or" ? "/" : " & ";
           } else {
-            operator = ` ${IconName(options.at(-1))} `; //looking for 'or' or 'and'
+            operator = ` ${IconName(options.at(-1), 1, false)} `; //looking for 'or' or 'and'
           }
           localize = {
             en: num === "any" ? `Add a Presence to any ` : `Add a Presence to `,
@@ -2810,7 +2820,7 @@ function IconName(str, iconNum = 1) {
               num === "any" ? `Ajoutez une Présence à n'importe quel ` : `Ajoutez une Présence à `,
             de: num === "any" ? `Ergänze um eine Präsenz ` : `Füge eine Präsenz hinzu `,
             pl: num === "any" ? `Dodaj Obecność do dowolnej ` : `Dodaj Obecność do `,
-            cs: num === "any" ? "" : "Přidání přítomnosti na ",
+            cs: num === "any" ? "Přidání přítomnosti na libovolné " : "Přidání přítomnosti na ",
             ar: ``,
             zh: ``,
             hu: num === "any" ? `Jelenlét lerakása bármely ` : `Jelenlét lerakása `,
@@ -2842,6 +2852,9 @@ function IconName(str, iconNum = 1) {
                   ? `Land ohne ${IconName(req.substring(3))} `
                   : `keine ${IconName(req.substring(3))} `,
                 pl: ``,
+                cs: landwith
+                  ? `Území bez ${IconName(req.substring(3), 1, false)} `
+                  : `žádné ${IconName(req.substring(3), 1, false)} `,
                 ar: ``,
                 zh: ``,
                 hu: landwith
@@ -2851,14 +2864,14 @@ function IconName(str, iconNum = 1) {
               subText += localize[lang];
               landwith = 0;
             } else if (terrains.has(req)) {
-              subText += `${IconName(req)} `;
+              subText += `${IconName(req, 1, false)} `;
             } else {
               localize = {
                 en: landwith ? `Land with ${IconName(req)}` : `${IconName(req)}`,
                 fr: landwith ? `Région avec ${IconName(req)}` : `${IconName(req)}`,
                 de: landwith ? `Land mit ${IconName(req)}` : `${IconName(req)}`,
                 pl: ``,
-                cs: landwith ? `území s ${IconName(req)}` : ``,
+                cs: landwith ? `území s ${IconName(req, 1, false)}` : `${IconName(req, 1, false)}`,
                 ar: ``,
                 zh: ``,
                 hu: landwith ? `, ahol van ${IconName(req)}` : `${IconName(req)}`,
@@ -2890,6 +2903,7 @@ function IconName(str, iconNum = 1) {
           fr: `Gagnez ${IconName(num, txt)}`,
           de: `Erhalte ${IconName(num, txt)}`,
           pl: `Zyskaj ${IconName(num, txt)}`,
+          cs: `Zisk ${IconName(num, txt, false)}`,
           ar: ``,
           zh: ``,
           hu: `${IconName(num, txt)} szerzése`,
@@ -2900,6 +2914,7 @@ function IconName(str, iconNum = 1) {
           fr: `Gagnez ${ListLocalize(options.slice(0, -1))}`,
           de: `Erhalte ${ListLocalize(options.slice(0, -1))}`,
           pl: `Zyskaj ${ListLocalize(options.slice(0, -1))}`,
+          cs: `Zisk ${ListLocalize(options.slice(0, -1))}`,
           ar: ``,
           zh: ``,
           hu: `${ListLocalize(options.slice(0, -1))} szerzése`,
@@ -2910,6 +2925,7 @@ function IconName(str, iconNum = 1) {
           fr: `Gagnez ${ListLocalize(options, "or")}`,
           de: `Erhalte ${ListLocalize(options, "or")}`,
           pl: `Zyskaj ${ListLocalize(options, "lub")}`,
+          cs: `Zisk ${ListLocalize(options, "nebo")}`,
           ar: ``,
           zh: ``,
           hu: `${ListLocalize(options, "or")} szerzése`,
@@ -2928,27 +2944,29 @@ function IconName(str, iconNum = 1) {
         zh: "或",
         hu: `VAGY`,
       };
-      subText = `${IconName(num)} ${localize[lang]} ${IconName(txt)}`;
+      subText = `${IconName(num, 1, isFirst)} ${localize[lang]} ${IconName(txt, 1, false)}`;
       break;
     case "gain-power-card":
       if (txt) {
-        let numName = IconName(num);
+        let numName = IconName(num, 1, isFirst);
         localize = {
           en: `Gain ${numName} Power Card ${txt}`,
           fr: `Gagnez ${numName} Carte Pouvoir ${txt}`,
           de: "Fähigkeiten-karte erhalten",
           pl: `Pozyskaj ${numName} Kartę Mocy ${txt}`,
+          cs: `Zisk ${numName} karet schopností ${txt}`,
           ar: "",
           zh: "獲得法術牌",
           hu: `${numName} Erőkártya szerzése ${txt}`,
         };
       } else if (num) {
-        let numName = IconName(num);
+        let numName = IconName(num, 1, false);
         localize = {
           en: `Gain ${numName} Power Card`,
           fr: `Gagnez ${numName} Carte Pouvoir`,
           de: "Fähigkeiten-karte erhalten",
           pl: "Pozyskaj Kartę Mocy",
+          cs: `Zisk ${numName} karet schopností`,
           ar: "",
           zh: "獲得法術牌",
           hu: `${numName} Erőkártya szerzése`,
@@ -2969,18 +2987,19 @@ function IconName(str, iconNum = 1) {
       break;
     case "take-power-card":
       if (txt) {
-        let numName = IconName(num);
+        let numName = IconName(num, 1, false);
         localize = {
           en: `Take ${numName} Power Card ${txt}`,
           fr: `Prenez ${numName} Carte Pouvoir ${txt}`,
           de: "Fähigkeiten-karte nehmen",
           pl: "Weź Kartę Mocy",
+          cs: `Take ${numName} Power Card ${txt}`,
           ar: "",
           zh: "拿取法術牌",
           hu: `${numName} Erőkártya elvétele ${txt}`,
         };
       } else if (num) {
-        let numName = IconName(num);
+        let numName = IconName(num, 1, false);
         localize = {
           en: `Take ${numName} Power Card`,
           fr: `Prenez ${numName} Carte Pouvoir`,
@@ -3038,7 +3057,7 @@ function IconName(str, iconNum = 1) {
       } else if (opt3) {
         if (num === 0 || num === "0") {
           // scaling, no flat energy
-          let perIcon = IconName(opt3);
+          let perIcon = IconName(opt3, 1, false);
           localize = {
             en: elementNames.has(opt3)
               ? `Gain ${txt} Energy per ${perIcon} Showing`
@@ -3059,7 +3078,7 @@ function IconName(str, iconNum = 1) {
           };
         } else {
           // scaling w/ flat energy
-          let perIcon = IconName(opt3);
+          let perIcon = IconName(opt3, 1, false);
           localize = {
             en: elementNames.has(opt3)
               ? `Gain ${num} Energy and +${txt} more per ${perIcon} Showing`
@@ -3095,10 +3114,19 @@ function IconName(str, iconNum = 1) {
       subText = localize[lang];
       break;
     case "gain-card-play":
-      subText =
-        num && num > 1
-          ? `+${num} ${CardPlays[lang]}/${Turn[lang]}`
-          : `+1 ${CardPlay[lang]}/${Turn[lang]}`;
+      if (lang ===  "cs") {
+        subText =
+          num && num > 4
+              ? "hraných karet"
+            : num && num > 1
+              ? "hrané karty"
+              : "hraná karta";
+      } else {
+        subText =
+          num && num > 1
+            ? `+${num} ${CardPlays[lang]}/${Turn[lang]}`
+            : `+1 ${CardPlay[lang]}/${Turn[lang]}`;
+      }
       break;
     case "growth-gain-card-play":
       num = num || 1;
@@ -3441,7 +3469,7 @@ function IconName(str, iconNum = 1) {
             fr: "Déplacez une Présence " + num,
             de: "Präsenz " + num + " bewegen",
             pl: "Przenieś Obecność " + num,
-            cs: "",
+            cs: "Přesunutí přítomnosti o " + num,
             ar: ``,
             zh: ``,
             hu: "Jelenlét mozgatása " + num,
@@ -3766,7 +3794,7 @@ function IconName(str, iconNum = 1) {
           fr: `Repoussez ${IconName(opt4)} ${IconName(txt)} depuis 1 de vos Région`,
           de: `Verschiebe ${IconName(opt4)} ${IconName(txt)} aus 1 deiner Gebiete`,
           pl: `Wypchnij ${IconName(opt4)} ${IconName(txt)} z twojej krainy`,
-          cs: ``,
+          cs: `Vyhnání ${IconName(opt4, 1, false)} ${IconName(txt, 1, false)} z 1 vašeho území`,
           ar: ``,
           zh: ``,
           hu: `Tolj el egy ${IconName(opt4)} ${IconName(txt)} jelzőt az egyik területedről`,
@@ -3832,7 +3860,7 @@ function IconName(str, iconNum = 1) {
           fr: `Repoussez 1 ${IconName(txt)} depuis 1 de vos Régions`,
           de: `Verschiebe 1 ${IconName(txt)} aus 1 deiner Gebiete`,
           pl: `Wypchnij 1 ${IconName(txt)} z twojej krainy`,
-          cs: ``,
+          cs: `Vyhnání 1 ${IconName(txt, 1, false)} z 1 vašeho území`,
           ar: ``,
           zh: ``,
           hu: `Tolj el 1 ${IconName(txt)} jelzőt az egyik területedről`,
@@ -3862,7 +3890,7 @@ function IconName(str, iconNum = 1) {
           fr: `Repoussez 1 ${subText} depuis 1 de vos Régions`,
           de: `Verschiebe 1 ${subText} aus 1 deiner Gebiete`,
           pl: `Wypchnij ${IconName(num)} z twojej krainy`,
-          cs: ``,
+          cs: `Vyhnání 1 ${subText} z 1 vašeho území`,
           ar: ``,
           zh: ``,
           hu: `Tolj el 1 ${subText}-t az egyik területedről`,
@@ -3929,7 +3957,7 @@ function IconName(str, iconNum = 1) {
           fr: `Rassemblez ${IconName(opt4)} ${IconName(txt)} dans 1 de vos Régions`,
           de: `Versammele ${IconName(opt4)} ${IconName(txt)} in einem deiner Gebiete`,
           pl: `Zgromaź ${IconName(opt4)} ${IconName(txt)} w twojej krainie`,
-          cs: ``,
+          cs: `Přivolání ${IconName(opt4, false)} ${IconName(txt, false)}i na 1 své území`,
           ar: ``,
           zh: ``,
           hu: `Gyűjts össze egy ${IconName(opt4)} ${IconName(txt)} jelzőt az egyik területedre`,
@@ -4020,9 +4048,9 @@ function IconName(str, iconNum = 1) {
           hu: `Gyűjtsd össze a ${IconName(num)}-t`,
         };
       } else {
-        subText = IconName(num);
+        subText = IconName(num, 1, false);
         for (let i = 1; i < options.length; i++) {
-          subText += "/" + IconName(options[i]);
+          subText += "/" + IconName(options[i], 1, false);
         }
         localize = {
           en: `Gather 1 ${subText} into 1 of your Lands`,
@@ -4243,13 +4271,12 @@ function IconName(str, iconNum = 1) {
     case "wetland-sands":
     case "ocean":
     case "oceans":
+    case "invaders":
       subText = landtypeNames[lang][str];
       break;
     case "inland":
     case "coastal":
-      subText = `${Capitalise(landtypeNames[lang][str])} ${Capitalise(
-        landtypeNames[lang]["land"]
-      )}`;
+      subText = `${landtypeNames[lang][str]} ${landtypeNames[lang]["land"]}`;
       break;
     case "empower-incarna":
       localize = {
@@ -4277,16 +4304,16 @@ function IconName(str, iconNum = 1) {
     case "any":
       localize = {
         en: {
-          sun: "sun",
-          moon: "moon",
-          fire: "fire",
-          air: "air",
-          plant: "plant",
-          water: "water",
-          earth: "earth",
-          animal: "animal",
-          star: "element",
-          any: "any",
+          sun: "Sun",
+          moon: "Moon",
+          fire: "Fire",
+          air: "Air",
+          plant: "Plant",
+          water: "Water",
+          earth: "Earth",
+          animal: "Animal",
+          star: "Element",
+          any: "Any",
         },
         fr: {
           sun: "Soleil",
@@ -4313,16 +4340,16 @@ function IconName(str, iconNum = 1) {
           any: "Beliebig",
         },
         pl: {
-          sun: "słońce",
-          moon: "księżyc",
-          fire: "ogień",
-          air: "powietrze",
-          plant: "roślinność",
-          water: "woda",
-          earth: "ziemia",
-          animal: "zwierzęcość",
-          star: "źródło mocy",
-          any: "dowolne",
+          sun: "Słońce",
+          moon: "Księżyc",
+          fire: "Ogień",
+          air: "Powietrze",
+          plant: "Roślinność",
+          water: "Woda",
+          earth: "Ziemia",
+          animal: "Zwierzęcość",
+          star: "Źródło mocy",
+          any: "Dowolne",
         },
         cs: {
           sun: "slunce",
@@ -4373,7 +4400,7 @@ function IconName(str, iconNum = 1) {
           any: "Bármi",
         },
       };
-      str = Capitalise(localize[lang][str]);
+      str = localize[lang][str];
       defaultProcessIcon();
       break;
     // Major/Minor/Unique
@@ -4382,9 +4409,9 @@ function IconName(str, iconNum = 1) {
     case "unique":
       localize = {
         en: {
-          major: "major",
-          minor: "minor",
-          unique: "unique",
+          major: "Major",
+          minor: "Minor",
+          unique: "Unique",
         },
         fr: {
           major: "Majeur",
@@ -4402,9 +4429,9 @@ function IconName(str, iconNum = 1) {
           unique: "Unikalną",
         },
         cs: {
-          major: "",
-          minor: "",
-          unique: "",
+          major: "silná",
+          minor: "běžná",
+          unique: "jedinečná",
         },
         ar: {
           major: "",
@@ -4422,7 +4449,7 @@ function IconName(str, iconNum = 1) {
           unique: "",
         },
       };
-      str = Capitalise(localize[lang][str]);
+      str = localize[lang][str];
       defaultProcessIcon();
       break;
     // Tokens
@@ -4440,18 +4467,18 @@ function IconName(str, iconNum = 1) {
     case "vitality":
       localize = {
         en: {
-          explorer: "explorer",
-          town: "town",
-          city: "city",
-          blight: "blight",
-          beast: "beasts",
-          beasts: "beasts",
-          disease: "disease",
-          wilds: "wilds",
-          badland: "badlands",
-          badlands: "badlands",
-          strife: "strife",
-          vitality: "vitality",
+          explorer: "Explorer",
+          town: "Town",
+          city: "City",
+          blight: "Blight",
+          beast: "Beasts",
+          beasts: "Beasts",
+          disease: "Disease",
+          wilds: "Wilds",
+          badland: "Badlands",
+          badlands: "Badlands",
+          strife: "Strife",
+          vitality: "Vitality",
         },
         fr: {
           explorer: "Explorateur",
@@ -4486,28 +4513,28 @@ function IconName(str, iconNum = 1) {
           town: "",
           city: "",
           blight: "",
-          beast: "bestie",
-          beasts: "bestie",
-          disease: "choroba",
-          wilds: "dzicz",
-          badland: "pustkowia",
-          badlands: "pustkowia",
-          strife: "niezgoda",
-          vitality: "witalność",
+          beast: "Bestie",
+          beasts: "Bestie",
+          disease: "Choroba",
+          wilds: "Dzicz",
+          badland: "Pustkowia",
+          badlands: "Pustkowia",
+          strife: "Niezgoda",
+          vitality: "Witalność",
         },
         cs: {
-          explorer: "",
-          town: "",
-          city: "",
-          blight: "",
-          beast: "",
+          explorer: "průzkumník",
+          town: "osady",
+          city: "města",
+          blight: "pohroma",
+          beast: "tvor",
           beasts: "",
-          disease: "",
-          wilds: "",
-          badland: "",
+          disease: "choroba",
+          wilds: "divočina",
+          badland: "pustina",
           badlands: "",
-          strife: "",
-          vitality: "",
+          strife: "konflikt",
+          vitality: "vitalita",
         },
         hu: {
           explorer: "Felfedező",
@@ -4524,7 +4551,7 @@ function IconName(str, iconNum = 1) {
           vitality: "Vitalitás",
         },
       };
-      str = Capitalise(localize[lang][str]) || str;
+      str = localize[lang][str] || Capitalise(str);
       defaultProcessIcon();
       break;
     // and/or
@@ -4558,10 +4585,10 @@ function IconName(str, iconNum = 1) {
           from: "",
         },
         cs: {
-          and: "123",
-          or: "456",
-          at: "789",
-          from: "132456",
+          and: "a",
+          or: "nebo",
+          at: "na",
+          from: "z",
         },
         ar: {
           and: "",
@@ -4584,6 +4611,12 @@ function IconName(str, iconNum = 1) {
       };
       subText = localize[lang][str];
       break;
+    case "dahan":
+      localize = {
+        cs: "dahany",
+      };
+      subText = localize[lang] || "Dahan";
+      break;
     case "":
       subText = "";
       break;
@@ -4594,8 +4627,8 @@ function IconName(str, iconNum = 1) {
   function defaultProcessIcon() {
     subText =
       iconNum && iconNum > 1
-        ? (numLocalize[lang][iconNum] || iconNum) + " " + Capitalise(str)
-        : Capitalise(str);
+        ? (numLocalize[lang][iconNum] || iconNum) + " " + Capitalise(str, false)
+        : Capitalise(str, isFirst);
     subText = numLocalize[lang][subText] || subText;
   }
 
@@ -4605,7 +4638,7 @@ function IconName(str, iconNum = 1) {
   return subText;
 }
 
-function Capitalise(str, plural = 0) {
+function Capitalise(str, isFirst = true) {
   str = str.trim();
   //check if custom icon
   if (str.startsWith("custom")) {
@@ -4615,20 +4648,16 @@ function Capitalise(str, plural = 0) {
   //others
   const hyphenCheck = str.split("-");
   const terrains = new Set(["wetland", "mountain", "sand", "sands", "jungle"]);
-  let return_str = hyphenCheck[0].charAt(0).toUpperCase() + hyphenCheck[0].slice(1);
-  if (plural) {
-    return_str += makePlural(hyphenCheck[0]);
-  }
+  let return_str = lang === "cs" && !isFirst ? hyphenCheck[0]
+      : hyphenCheck[0].charAt(0).toUpperCase() + hyphenCheck[0].slice(1);
   for (let i = 1; i < hyphenCheck.length; i++) {
     if (terrains.has(hyphenCheck[i])) {
       return_str += " or ";
     } else {
       return_str += " ";
     }
-    return_str += hyphenCheck[i].charAt(0).toUpperCase() + hyphenCheck[i].slice(1);
-    if (plural) {
-      return_str += makePlural(hyphenCheck[i]);
-    }
+    return_str += lang === "cs" ? hyphenCheck[i]
+        : hyphenCheck[i].charAt(0).toUpperCase() + hyphenCheck[i].slice(1);
   }
 
   return return_str;
