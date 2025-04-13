@@ -36,7 +36,7 @@ growth-background {
 
 growth section-title {
   margin-left: 47px;
-  margin-top: -6px;
+  margin-top: -8px;
   pointer-events: none;
 }
 
@@ -324,7 +324,8 @@ growth-cell-double {
   display: flex;
   align-items: center;
   flex-direction: row;
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 18.66px;
   font-style: italic;
   text-align: center;
@@ -812,7 +813,8 @@ presence-req icon.ocean {
 }
 
 presence-req {
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 18.66px;
   line-height: 26px;
   font-style: italic;
@@ -1104,7 +1106,8 @@ custom-icon2 icon.move-range-4 {
 growth-text {
   display: flex;
   position: relative;
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 18.66px;
   font-style: italic;
   margin-top: 0px;
@@ -1315,7 +1318,8 @@ growth-cost {
 
 growth-cost::after {
   content: "Cost";
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 18.66px;
   font-style: italic;
   position: absolute;
@@ -1350,7 +1354,8 @@ growth-cost.custom value {
 
 growth-cost.custom::after {
   content: "Cost";
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 18.66px;
   font-style: italic;
   position: absolute;
@@ -1378,7 +1383,8 @@ growth-cost.nonscaling > icon {
 }
 
 growth-cost-custom-nonscaling-description {
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 14px;
   font-style: italic;
   width: 120px;

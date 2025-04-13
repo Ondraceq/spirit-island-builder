@@ -104,14 +104,14 @@ function addImages(board) {
     board.innerHTML =
       `<spirit-image-holder><spirit-image class="spirit-image" style="height:${imageSize}; background-image: url(${spiritImage});" ></spirit-image></spirit-image-holder>` +
       board.innerHTML;
-    artistCredit[0].style.display = "block";
-    artistCredit[0].innerHTML = "Artist Credit: " + artistCredit[0].innerHTML;
+    // artistCredit[0].style.display = "block";
+    // artistCredit[0].innerHTML = "Artist Credit: " + artistCredit[0].innerHTML;
   }
 
   //Add Meeple
   const spiritName = board.getElementsByTagName("spirit-name");
   spiritName[0].outerHTML += "<custom-meeple></custom-meeple>";
-  spiritName[0].outerHTML += "<created-with>spiritislandbuilder.com</created-with>";
+  // spiritName[0].outerHTML += "<created-with>spiritislandbuilder.com</created-with>";
 }
 
 function addTrackBanners(board) {
@@ -1987,7 +1987,7 @@ function getPresenceNodeHtml(
   // Setup node class
   if (trackType === "energy") {
     nodeClass = "energy";
-    subText = `${Energy[lang]}/${Turn[lang]}`;
+    subText = `${Capitalise(Energy[lang], true)}/${Turn[lang]}`;
   } else if (trackType === "card") {
     nodeClass = "card";
     subText = `${Capitalise(CardPlays[lang], true)}`;
@@ -2977,7 +2977,7 @@ function IconName(str, iconNum = 1, isFirst = true) {
           fr: `Gagnez Carte Pouvoir`,
           de: "Fähigkeiten-karte erhalten",
           pl: "Pozyskaj Kartę Mocy",
-          cs: "Zisk karty schopností",
+          cs: "Zisk karty schopnosti",
           ar: "",
           zh: "獲得法術牌",
           hu: "Erőkártya szerzése",

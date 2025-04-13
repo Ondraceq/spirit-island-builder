@@ -46,7 +46,7 @@ presence-tracks:hover {
 presence-tracks presence-title {
   margin-left: 39px;
   margin-bottom: 12px;
-  padding-top: 0px;
+  padding-top: 10px;
   pointer-events: none;
   height: 37px;
   display: flex;
@@ -183,7 +183,8 @@ track-banner-art.combined-track {
 }
 
 subtext {
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
+  font-weight: 500;
   font-size: 18.66px;
   font-style: italic;
   text-align: center;

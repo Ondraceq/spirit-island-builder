@@ -48,7 +48,7 @@ innate-powers:hover {
 
 innate-powers section-title {
   margin-left: 25px;
-  padding-top: 0px;
+  padding-top: 4px;
   flex: 0 1 auto;
 }
 
@@ -131,7 +131,7 @@ info-title {
 innate-info {
   width: 463px;
   display: flex;
-  font-family: "Name Headings";
+  font-family: "Thin Heading";
   text-transform: uppercase;
   box-sizing: border-box;
   border-bottom: 3px solid black;
@@ -767,7 +767,7 @@ innate-info icon.spirit {
 }
 
 cost-threshold {
-  font-family: "Lato SemiBold";
+  font-family: "Growth Subtext";
   font-weight: bold;
   font-style: italic;
   font-size: 20px;

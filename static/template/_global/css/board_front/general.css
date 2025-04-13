@@ -73,20 +73,19 @@ spirit-name {
 spirit-name-text {
   display: block;
   position: absolute;
-  font-family: "Name Headings";
+  font-family: "Thin Heading";
   text-transform: uppercase;
   color: white;
-  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+  text-shadow: -1px 1px 1px #000, 1px 1px 1px #000, 1px -1px 1px #000, -1px -1px 1px #000;
   text-align: left;
   z-index: 2;
   white-space: nowrap;
-  letter-spacing: 0px;
+  letter-spacing: 1px;
   word-spacing: 0px;
   font-size: 45px;
   text-indent: 20px;
   margin-bottom: 16px;
   width: 650px;
-  -webkit-text-stroke: thin black;
 }
 
 spirit-name-art {
